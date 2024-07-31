@@ -5,6 +5,7 @@ const Button = ({
   backgroundColor = "gold",
   color = "black",
   title,
+  borderRadius = 10,
 }) => {
   return (
     <button
@@ -14,7 +15,7 @@ const Button = ({
         backgroundColor,
         border: "none",
         outline: "none",
-        borderRadius: 10,
+        borderRadius: borderRadius,
         minWidth: 50,
         minHeight: 20,
         padding: 10,
