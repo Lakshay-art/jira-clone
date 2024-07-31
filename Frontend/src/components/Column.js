@@ -13,10 +13,11 @@ const Colunm = ({ data, columnId, title }) => {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
+          flex: 1,
           background: "white",
           border: "1px solid #E7E9EC",
           padding: 10,
-          width: 350,
+          minWidth: 350,
           minHeight: 400,
           borderRadius: "10px",
         }}

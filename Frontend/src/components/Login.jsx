@@ -17,7 +17,7 @@ export default function Login(props) {
             email: email.current.value,
             password: password.current.value,
         }).then((res) => {
-            setUser(res)
+            setUser(res.data)
             navigate("/dashboard")
         }, (err) => {
             console.log(err);

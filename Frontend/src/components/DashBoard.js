@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Colunm from "./Column";
 import { DragProvider, useDrag } from "../contexts/dragContext";
+import Button from "./Button";
+import { AddTask } from "./AddTask";
 
 export default function Showposts(props) {
   const { data } = useDrag();
+  const [modal, openModal] = useState();
   return (
     <div className="Loginandregister mt-3">
+      {!!modal && <dialog open>{modal}</dialog>}
       {/* <div className="textareaflex">
         <div style={{ border: "1px black solid", backgroundColor: "grey" }}>
           <img
@@ -28,6 +32,16 @@ export default function Showposts(props) {
           //   ref={postt}
         ></textarea>
       </div> */}
+      <div style={{ marginLeft: 150, marginBlock: 20 }}>
+        <Button
+          title={"Add Task"}
+          backgroundColor="#4575ED"
+          color="white"
+          onClick={() => {
+            openModal(<AddTask close={() => openModal(undefined)} />);
+          }}
+        />
+      </div>
 
       <div
         style={{
@@ -35,6 +49,8 @@ export default function Showposts(props) {
           gap: 15,
           justifyContent: "center",
           marginTop: 20,
+          flexWrap: "wrap",
+          marginInline: 150,
         }}
       >
         <Colunm data={data?.[0]} columnId={0} title={"TODO"}></Colunm>

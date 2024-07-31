@@ -36,11 +36,16 @@ const verify = (req, res, next) => {
 router.post("/setpost", verify, async (req, res) => {
   try {
     if (req.body.username == req.user.name) {
-      const text = req.body.posttext;
-      const user = req.body.user;
-      const username = req.body.username;
+      const title = req.body.title;
+      const description = req.body.description;
+
       const _id = mongoose.Types.ObjectId();
-      var post = await new Post({ _id, user, text, username, likes: [] });
+      var post = await new Post({
+        _id,
+        user: req.user._id,
+        title,
+        description,
+      });
       let currid;
       await post.save();
       res.send(_id);

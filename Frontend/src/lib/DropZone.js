@@ -21,6 +21,8 @@ const DropZone = ({ onDrop, children, id }) => {
         // margin: "8px",
         // padding: "16px",
         // border: "2px dashed #ccc",
+        display: "flex",
+        flex: 1,
         minHeight: "100px",
       }}
     >
