@@ -3,7 +3,7 @@ import { Task } from "./Task";
 import DropZone from "../lib/DropZone";
 import { useDrag } from "../contexts/dragContext";
 
-const Colunm = ({ data, columnId }) => {
+const Colunm = ({ data, columnId, title }) => {
   const { handleDrop } = useDrag();
 
   return (
@@ -16,11 +16,22 @@ const Colunm = ({ data, columnId }) => {
           background: "white",
           border: "1px solid #E7E9EC",
           padding: 10,
-          width: 300,
+          width: 350,
           minHeight: 400,
           borderRadius: "10px",
         }}
       >
+        <div
+          style={{
+            color: "white",
+            background: "#6698F2",
+            padding: "8px 12px",
+            fontWeight: 700,
+            borderRadius: 5,
+          }}
+        >
+          {title}
+        </div>
         {data?.map((item, index) => {
           return (
             <Task

@@ -33,17 +33,16 @@ export default function Showposts(props) {
         style={{
           display: "flex",
           gap: 15,
+          justifyContent: "center",
+          marginTop: 20,
           // background: "red",
           // width: "100px",
           // height: "100px",
         }}
       >
-        <Colunm data={data?.[0]} columnId={0}>
-          {" "}
-        </Colunm>
-        <Colunm data={data?.[1]} columnId={1}></Colunm>
-        <Colunm data={data?.[2]} columnId={2}></Colunm>
-        <Colunm data={data?.[3]} columnId={3}></Colunm>
+        <Colunm data={data?.[0]} columnId={0} title={"TODO"}></Colunm>
+        <Colunm data={data?.[1]} columnId={1} title={"IN PROGRESS"}></Colunm>
+        <Colunm data={data?.[2]} columnId={2} title={"DONE"}></Colunm>
       </div>
     </div>
   );
