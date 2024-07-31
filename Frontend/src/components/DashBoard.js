@@ -35,9 +35,6 @@ export default function Showposts(props) {
           gap: 15,
           justifyContent: "center",
           marginTop: 20,
-          // background: "red",
-          // width: "100px",
-          // height: "100px",
         }}
       >
         <Colunm data={data?.[0]} columnId={0} title={"TODO"}></Colunm>

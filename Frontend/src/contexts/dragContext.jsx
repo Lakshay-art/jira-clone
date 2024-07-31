@@ -6,7 +6,7 @@ const DragContext = createContext({
 });
 
 export const DragProvider = ({ children }) => {
-    const [data, setData] = useState([[{ title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }]]);
+    const [data, setData] = useState([[{ title: "Task 1", description: "Description 1", createdAt: "31-07-2024, 5:30:00" }, { title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }]]);
 
     const handleDrop = ({ id, parentColumn, currentColumn }) => {
 
