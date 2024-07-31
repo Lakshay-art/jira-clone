@@ -12,7 +12,7 @@ const app = express();
 //const dotEnv = require("dotenv");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const User = require("../router/userRouter");
 const Post = require("../router/postRouter");
 // const path = require("path");
@@ -27,21 +27,21 @@ app.use(bodyParser.json());
 //const port = precess.env.PORT || 5000;
 // const port = 8000;
 
-// mongoose
-//   .connect(
-//     "mongodb+srv://Lakshay:lakshaymongo1@cluster0.4fz4c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-//     {
-//       useUnifiedTopology: true,
-//       useNewUrlParser: true,
-//     }
-//   )
-//   .then((response) => {
-//     console.log("Connected to Mongo");
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit(1);
-//   });
+mongoose
+  .connect(
+    "mongodb+srv://lakshaymuseum123:okfTpSgVpZbBFvQk@cluster0.bp2mxmc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }
+  )
+  .then((response) => {
+    console.log("Connected to Mongo");
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
 
 // if(process.env.NODE_ENV === "production"){
 

@@ -9,7 +9,7 @@ const Button = ({
 }) => {
   return (
     <button
-      onClick={() => onClick?.()}
+      onClick={(e) => onClick?.(e)}
       style={{
         color,
         backgroundColor,

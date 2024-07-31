@@ -11,14 +11,17 @@ export default function Register(props) {
   //   useEffect(() => {
   //     props.tellstate("register");
   //   }, []);
-  const name = useRef();
+  const lname = useRef();
+  const fname = useRef();
   const email = useRef();
   const password = useRef();
+  const apassword = useRef();
   const submitt = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/users/register", {
-        name: name.current.value,
+      .post("https://jira-clone-c84z.vercel.app/api/users/register", {
+        fname: fname.current.value,
+        lname: lname.current.value,
         email: email.current.value,
         password: password.current.value,
       })
@@ -55,13 +58,13 @@ export default function Register(props) {
           <input
             type="text"
             placeholder="First Name"
-            ref={email}
+            ref={fname}
             style={{ padding: 5 }}
           />
           <input
             type="text"
             placeholder="Last Name"
-            ref={email}
+            ref={lname}
             style={{ padding: 5 }}
           />
           <input
@@ -79,7 +82,7 @@ export default function Register(props) {
           <input
             type="password"
             placeholder="Confirm Password"
-            ref={password}
+            ref={apassword}
             style={{ padding: 5 }}
           />
 
