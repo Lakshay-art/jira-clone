@@ -33,7 +33,7 @@ function App() {
               )
             }
           ></Route>
-          <Route path="/register" element={Register} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </div>

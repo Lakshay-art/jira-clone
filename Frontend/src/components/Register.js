@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 import { Link, Redirect, Switch, useNavigation } from "react-router-dom";
 import axios from "axios";
+import Button from "./Button";
 
 export default function Register(props) {
   //   const history = useHistory();
@@ -35,24 +36,78 @@ export default function Register(props) {
       );
   };
 
-  return (
-    <div>
-      <div className="Loginandregister">
-        <h2>Register</h2>
-        <p>Join me and my friends on this application!</p>
-        <form onSubmit={submitt}>
-          <input type="text" placeholder="Name" ref={name} />
-          <input type="email" placeholder="Email" ref={email} />
-          <input type="password" placeholder="Password" ref={password} />
+  const signup = () => {};
 
-          <input type="submit" className="greenbtn" />
-          <p>
-            Already have an account?
-            <Link to="/login">
-              <span className="linkgreen">Login</span>
-            </Link>
-          </p>
-        </form>
+  return (
+    <div style={{ width: 350, margin: "auto" }}>
+      <h2 style={{ color: "#4575ED", marginBottom: 10 }}>SignUp</h2>
+      <div
+        style={{ border: "2px solid #4575ED", borderRadius: 8, padding: 12 }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 15,
+            marginTop: 10,
+          }}
+        >
+          <input
+            type="text"
+            placeholder="First Name"
+            ref={email}
+            style={{ padding: 5 }}
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            ref={email}
+            style={{ padding: 5 }}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            ref={email}
+            style={{ padding: 5 }}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            ref={password}
+            style={{ padding: 5 }}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            ref={password}
+            style={{ padding: 5 }}
+          />
+
+          <Button
+            onClick={submitt}
+            backgroundColor="#4575ED"
+            color="white"
+            title={"SignUp"}
+            borderRadius={2}
+          />
+        </div>
+        <p style={{ fontSize: 12, fontWeight: 600, textAlign: "center" }}>
+          Already have an account?
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            {" "}
+            <span className="linkgreen">Login</span>
+          </Link>
+        </p>
+
+        <div style={{ textAlign: "center", width: "100%" }}>
+          <Button
+            onClick={signup}
+            backgroundColor="#4575ED"
+            color="white"
+            title={"Signup with Google"}
+            borderRadius={6}
+          />
+        </div>
       </div>
     </div>
   );
