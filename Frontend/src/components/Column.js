@@ -8,7 +8,19 @@ const Colunm = ({ data, columnId }) => {
 
   return (
     <DropZone id={columnId} onDrop={handleDrop}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          background: "white",
+          border: "1px solid #E7E9EC",
+          padding: 10,
+          width: 300,
+          minHeight: 400,
+          borderRadius: "10px",
+        }}
+      >
         {data?.map((item, index) => {
           return (
             <Task

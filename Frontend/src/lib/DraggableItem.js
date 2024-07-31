@@ -14,9 +14,6 @@ const DraggableItem = ({ id, children, parentColumn }) => {
       draggable
       onDragStart={handleDragStart}
       style={{
-        margin: "8px",
-        padding: "16px",
-        border: "1px solid #ccc",
         cursor: "move",
       }}
     >

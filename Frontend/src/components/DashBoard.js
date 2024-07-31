@@ -6,10 +6,6 @@ export default function Showposts(props) {
   const { data } = useDrag();
   return (
     <div className="Loginandregister mt-3">
-      <h2>Welcome to a thriving tech community!</h2>
-      <p>
-        Discuss the latest on technology and trends. Be civil and supportive!
-      </p>
       {/* <div className="textareaflex">
         <div style={{ border: "1px black solid", backgroundColor: "grey" }}>
           <img
@@ -37,7 +33,7 @@ export default function Showposts(props) {
         style={{
           display: "flex",
           gap: 15,
-          background: "red",
+          // background: "red",
           // width: "100px",
           // height: "100px",
         }}

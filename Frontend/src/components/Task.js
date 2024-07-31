@@ -4,7 +4,9 @@ import DraggableItem from "../lib/DraggableItem";
 export const Task = ({ data, id, parentColumn }) => {
   return (
     <DraggableItem id={id} parentColumn={parentColumn}>
-      <div style={{ border: "1px solid red" }}>ghvjvhjvjkhvbj</div>
+      <div style={{ background: "#D9E6FC", padding: 20, borderRadius: 8 }}>
+        ghvjvhjvjkhvbj
+      </div>
     </DraggableItem>
   );
 };
