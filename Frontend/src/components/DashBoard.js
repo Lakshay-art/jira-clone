@@ -1,0 +1,54 @@
+import React, { useEffect, useRef, useState } from "react";
+import Colunm from "./Column";
+import { DragProvider, useDrag } from "../contexts/dragContext";
+
+export default function Showposts(props) {
+  const { data } = useDrag();
+  return (
+    <div className="Loginandregister mt-3">
+      <h2>Welcome to a thriving tech community!</h2>
+      <p>
+        Discuss the latest on technology and trends. Be civil and supportive!
+      </p>
+      {/* <div className="textareaflex">
+        <div style={{ border: "1px black solid", backgroundColor: "grey" }}>
+          <img
+            style={{ border: "white solid 3px" }}
+            src="background.png"
+            alt=""
+            width="40px"
+            height="auto"
+          />
+        </div>
+        <textarea
+          style={{
+            padding: "5px",
+            width: "90%",
+            minWidth: "200px",
+            marginRight: "15%",
+          }}
+          placeholder="What's on your mind"
+          rows="2"
+          //   ref={postt}
+        ></textarea>
+      </div> */}
+
+      <div
+        style={{
+          display: "flex",
+          gap: 15,
+          background: "red",
+          // width: "100px",
+          // height: "100px",
+        }}
+      >
+        <Colunm data={data?.[0]} columnId={0}>
+          {" "}
+        </Colunm>
+        <Colunm data={data?.[1]} columnId={1}></Colunm>
+        <Colunm data={data?.[2]} columnId={2}></Colunm>
+        <Colunm data={data?.[3]} columnId={3}></Colunm>
+      </div>
+    </div>
+  );
+}
