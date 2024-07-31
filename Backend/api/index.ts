@@ -19,12 +19,13 @@ const Post = require("../router/postRouter");
 const Comments = require("../router/commentsRouter");
 
 const allowedOrigins = [
-  "https://jira-clone-btbv.vercel.app/",
-  "http://localhost:3000/",
+  "https://jira-clone-btbv.vercel.app",
+  "http://localhost:3000",
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log("Origin:", origin);
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
