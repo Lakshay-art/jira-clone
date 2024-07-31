@@ -1,19 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-//import { Button } from 'react-bootstrap'
-import { Link, useNavigation } from 'react-router-dom'
+import { Link, useNavigate, useNavigation } from 'react-router-dom'
 import Button from './Button';
-//import jwt_decode from "jwt-decode";
+import { useAuth } from '../contexts/authContext';
+
 
 export default function Login(props) {
-
-    const [user, setuser] = useState({
-        name: '',
-        id: '',
-        refreshToken: '',
-        accessToken: '',
-    });
-
+    const { login, setUser } = useAuth()
+    const navigate = useNavigate()
 
     const email = useRef();
     const password = useRef();
@@ -23,24 +17,23 @@ export default function Login(props) {
             email: email.current.value,
             password: password.current.value,
         }).then((res) => {
-
+            setUser(res)
+            navigate("/dashboard")
         }, (err) => {
             console.log(err);
         })
-        //setheader();
     }
-    const login = (e) => {
-        e.preventDefault();
-        axios.post("http://localhost:8000/api/users/login", {
-            email: email.current.value,
-            password: password.current.value,
-        }).then((res) => {
+    // const login = (e) => {
+    //     e.preventDefault();
+    //     axios.post("http://localhost:8000/api/users/login", {
+    //         email: email.current.value,
+    //         password: password.current.value,
+    //     }).then((res) => {
 
-        }, (err) => {
-            console.log(err);
-        })
-        //setheader();
-    }
+    //     }, (err) => {
+    //         console.log(err);
+    //     })
+    // }
     return (
         <div style={{ width: 350, margin: "auto", }}>
             <h2 style={{ color: "#4575ED", marginBottom: 10 }}>Login</h2>

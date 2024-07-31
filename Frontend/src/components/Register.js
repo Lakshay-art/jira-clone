@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Link, Redirect, Switch, useNavigation } from "react-router-dom";
 import axios from "axios";
@@ -11,12 +11,16 @@ export default function Register(props) {
   //   useEffect(() => {
   //     props.tellstate("register");
   //   }, []);
+  const [pwdError, setpwdError] = useState(false);
   const lname = useRef();
   const fname = useRef();
   const email = useRef();
   const password = useRef();
   const apassword = useRef();
   const submitt = (e) => {
+    if (password !== apassword) {
+      setpwdError(true);
+    }
     e.preventDefault();
     axios
       .post("https://jira-clone-c84z.vercel.app/api/users/register", {
@@ -85,6 +89,13 @@ export default function Register(props) {
             ref={apassword}
             style={{ padding: 5 }}
           />
+          {pwdError ? (
+            <p style={{ margin: 0, fontSize: 12, color: "red" }}>
+              Password doesn't match
+            </p>
+          ) : (
+            <></>
+          )}
 
           <Button
             onClick={submitt}

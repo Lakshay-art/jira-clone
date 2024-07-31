@@ -104,7 +104,7 @@ router.post(
 
         response.json({
           id: user._id,
-          name: user.name,
+          name: user.fname + user.lname,
           isAdmin: user.isAdmin,
           accessToken,
           refreshToken,
