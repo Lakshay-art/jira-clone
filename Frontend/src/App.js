@@ -9,15 +9,16 @@ import "./App.css";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import DashBoard from "./components/DashBoard";
-// import ProtectedRoute from "./lib/ProtectedRoute";
-import { AuthProvider, useAuth } from "./contexts/authContext";
+import { useAuth } from "./contexts/authContext";
 import { DragProvider } from "./contexts/dragContext";
+import Navbar from "./components/NavBar";
 
 function App() {
   const { isAuthenticated } = useAuth();
   return (
     <div className="App">
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/login" element={<Login />} />
