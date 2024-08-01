@@ -21,6 +21,7 @@ const Comments = require("../router/commentsRouter");
 const allowedOrigins = [
   "https://jira-clone-btbv.vercel.app",
   "http://localhost:3000",
+  "https://jira-clone-kohl.vercel.app/",
 ];
 
 const corsOptions = {

@@ -6,7 +6,6 @@ const Post = require("../models/Post");
 //const User=require("../models/User");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const Comments = require("../models/Comments");
 
 //verifying the user
 const verify = (req, res, next) => {
@@ -62,11 +61,6 @@ router.post("/deletepost", verify, async (req, res) => {
   console.log(req.user.name + " " + req.body.user);
 
   if (req.user.name == req.body.user) {
-    await Comments.deleteMany({ postid: req.body.id })
-      .then(() => {
-        res.status(200);
-      })
-      .catch((err) => {});
     await Post.deleteOne({
       // _id:`ObjectId("${req.body.id}")`,
       _id: req.body.id,
