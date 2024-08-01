@@ -103,10 +103,8 @@ router.post("/updateTask", verify, async (req, res) => {
       req.body.postid,
       updatedTask,
       function (err, response) {
-        if (err) throw err;
-        console.log(
-          "--------like added to id" + req.body.postid + "-----------"
-        );
+        if (err) res.send("Error while accessing the data");
+        res.send(response);
       }
     );
   }
