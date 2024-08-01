@@ -83,7 +83,7 @@ router.post("/deletepost", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", async (req, res) => {
-  console.log(req.user._id);
+  console.log(req.user);
   try {
     await Post.find(
       { user: req.user._id },
