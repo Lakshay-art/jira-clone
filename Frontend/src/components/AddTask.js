@@ -1,18 +1,17 @@
 import React, { useRef } from "react";
 import Button from "./Button";
 import { useDrag } from "../contexts/dragContext";
-import getAuthedAxios from "../lib/authedAxios";
-import { useAuth } from "../contexts/authContext";
+import useAuthedAxios from "../hooks/useAuthedAxios";
 
 export const AddTask = ({ close }) => {
   const title = useRef();
   const description = useRef();
   const { setData } = useDrag();
-  const { user } = useAuth();
+
+  const axios = useAuthedAxios();
 
   const add = async () => {
-    console.log(user);
-    await getAuthedAxios(user?.accessToken)
+    await axios
       .post("https://jira-clone-api-zeta.vercel.app/api/posts/setpost", {
         title: title.current.value,
         description: description.current.value,
@@ -20,7 +19,7 @@ export const AddTask = ({ close }) => {
       .then((res) => {
         setData((prevState) => {
           const prev = prevState.map((col) => [...col]);
-          prev?.[0]?.push(res);
+          prev?.[0]?.push(res.data);
           return prev;
         });
       });

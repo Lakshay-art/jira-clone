@@ -8,7 +8,7 @@ const DragContext = createContext({
 });
 
 export const DragProvider = ({ children }) => {
-    const { user: { accessToken } } = useAuth()
+    const { user } = useAuth()
     const [data, setData] = useState([]);
 
     const handleDrop = ({ id, parentColumn, currentColumn }) => {
@@ -25,7 +25,7 @@ export const DragProvider = ({ children }) => {
 
     const fetchUserTasks = async () => {
         // https://jira-clone-api-zeta.vercel.app
-        await getAuthedAxios(accessToken).get("https://jira-clone-api-zeta.vercel.app/api/posts/userTasks").then((res) => {
+        await getAuthedAxios(user).get("https://jira-clone-api-zeta.vercel.app/api/posts/userTasks").then((res) => {
             const data = [[], [], []];
             for (let i = 0; i < res.data.length; i++) {
                 const curr = res.data[i]
@@ -38,7 +38,7 @@ export const DragProvider = ({ children }) => {
 
     const updateTask = async (task) => {
         // https://jira-clone-api-zeta.vercel.app
-        await getAuthedAxios(accessToken).post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", task).then((res) => {
+        await getAuthedAxios(user).post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", task).then((res) => {
             // const data = [[], [], []];
             // for (let i = 0; i < res.data.length; i++) {
             //     const curr = res.data[i]
