@@ -4,16 +4,24 @@ import Button from "./Button";
 import useAuthedAxios from "../hooks/useAuthedAxios";
 import { EditTask } from "./EditTask";
 import { ViewTask } from "./ViewTask";
+import { useDrag } from "../contexts/dragContext";
 
 export const Task = ({ data, id, parentColumn }) => {
   const axios = useAuthedAxios();
+  const { setData } = useDrag();
   const [modal, openModal] = useState();
   const deletePost = async () => {
     await axios
       .post("https://jira-clone-api-zeta.vercel.app/api/posts/deleteTask", {
         _id: data?._id,
       })
-      .then((res) => {});
+      .then((res) => {
+        setData((prevState) => {
+          const prev = prevState.map((col) => [...col]);
+          prev?.[parentColumn]?.splice(id, 1);
+          return prev;
+        });
+      });
   };
   return (
     <>
