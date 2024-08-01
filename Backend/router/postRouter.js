@@ -83,6 +83,7 @@ router.post("/deletepost", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", async (req, res) => {
+  console.log(req.user._id);
   try {
     await Post.find(
       { user: req.user._id },
@@ -96,31 +97,18 @@ router.get("/userTasks", async (req, res) => {
       }
     );
   } catch (error) {
-    // console.log(error)
+    console.log(error);
   }
 });
 
-//add comments to posts
-// router.post('/addcomment',verify,async(req,res)=>{
-//   if(req.user.name==req.body.username){
-
-//   }
-// })
-
-//add likes to posts
-router.post("/addlikes", verify, async (req, res) => {
+//update posts
+router.post("/updateTask", verify, async (req, res) => {
   // console.log(req.body.username+" "+req.user.name);
   if (req.body.username == req.user.name) {
+    const updatedTask = req.body;
     Post.findByIdAndUpdate(
       req.body.postid,
-      {
-        $push: {
-          likes: {
-            user: req.body.id,
-            username: req.body.username,
-          },
-        },
-      },
+      updatedTask,
       function (err, response) {
         if (err) throw err;
         console.log(
