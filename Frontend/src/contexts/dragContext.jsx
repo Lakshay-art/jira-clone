@@ -24,8 +24,8 @@ export const DragProvider = ({ children }) => {
     };
 
     const fetchUserTasks = async () => {
-        // https://jira-clone-c84z.vercel.app
-        await getAuthedAxios(accessToken).get("https://jira-clone-c84z.vercel.app/api/posts/userTasks").then((res) => {
+        // https://jira-clone-api-zeta.vercel.app
+        await getAuthedAxios(accessToken).get("https://jira-clone-api-zeta.vercel.app/api/posts/userTasks").then((res) => {
             const data = [[], [], []];
             for (let i = 0; i < res.data.length; i++) {
                 const curr = res.data[i]
@@ -37,8 +37,8 @@ export const DragProvider = ({ children }) => {
     }
 
     const updateTask = async (task) => {
-        // https://jira-clone-c84z.vercel.app
-        await getAuthedAxios(accessToken).post("https://jira-clone-c84z.vercel.app/api/posts/updateTask", task).then((res) => {
+        // https://jira-clone-api-zeta.vercel.app
+        await getAuthedAxios(accessToken).post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", task).then((res) => {
             // const data = [[], [], []];
             // for (let i = 0; i < res.data.length; i++) {
             //     const curr = res.data[i]

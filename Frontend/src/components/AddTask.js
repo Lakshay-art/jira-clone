@@ -13,7 +13,7 @@ export const AddTask = ({ close }) => {
   const add = async () => {
     console.log(user);
     await getAuthedAxios(user?.accessToken)
-      .post("https://jira-clone-c84z.vercel.app/api/posts/setpost", {
+      .post("https://jira-clone-api-zeta.vercel.app/api/posts/setpost", {
         title: title.current.value,
         description: description.current.value,
       })

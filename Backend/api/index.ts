@@ -19,8 +19,8 @@ const Post = require("../router/postRouter");
 
 const allowedOrigins = [
   "https://jira-clone-btbv.vercel.app",
-  "http://localhost:3000",
   "https://jira-clone-kohl.vercel.app",
+  "http://localhost:3000",
 ];
 
 const corsOptions = {

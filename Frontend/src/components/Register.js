@@ -23,7 +23,7 @@ export default function Register(props) {
     }
     e.preventDefault();
     axios
-      .post("https://jira-clone-c84z.vercel.app/api/users/register", {
+      .post("https://jira-clone-api-zeta.vercel.app/api/users/register", {
         fname: fname.current.value,
         lname: lname.current.value,
         email: email.current.value,

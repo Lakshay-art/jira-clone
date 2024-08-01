@@ -13,7 +13,7 @@ export default function Login(props) {
     const password = useRef();
     const submitt = (e) => {
         e.preventDefault();
-        axios.post("https://jira-clone-c84z.vercel.app/api/users/login", {
+        axios.post("https://jira-clone-api-zeta.vercel.app/api/users/login", {
             email: email.current.value,
             password: password.current.value,
         }).then((res) => {
