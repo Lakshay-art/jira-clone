@@ -3,10 +3,20 @@ import Colunm from "./Column";
 import { DragProvider, useDrag } from "../contexts/dragContext";
 import Button from "./Button";
 import { AddTask } from "./AddTask";
+import { useAuth } from "../contexts/authContext";
 
 export default function Showposts(props) {
-  const { data } = useDrag();
+  const { data, fetchUserTasks } = useDrag();
+  const {
+    user: { accessToken },
+  } = useAuth();
   const [modal, openModal] = useState();
+  useEffect(() => {
+    console.log("first");
+    if (accessToken) {
+      fetchUserTasks(accessToken);
+    }
+  }, [accessToken]);
   return (
     <div className="Loginandregister mt-3">
       {!!modal && <dialog open>{modal}</dialog>}

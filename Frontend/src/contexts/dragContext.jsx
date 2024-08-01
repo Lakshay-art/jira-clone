@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
+import getAuthedAxios from "../lib/authedAxios";
 
 const DragContext = createContext({
     handleDrop: () => { },
@@ -6,7 +7,7 @@ const DragContext = createContext({
 });
 
 export const DragProvider = ({ children }) => {
-    const [data, setData] = useState([[{ title: "Task 1", description: "Description 1", createdAt: "31-07-2024, 5:30:00" }, { title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }, { title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }], [{ title: "", description: "", createdAt: "" }]]);
+    const [data, setData] = useState([]);
 
     const handleDrop = ({ id, parentColumn, currentColumn }) => {
 
@@ -19,8 +20,20 @@ export const DragProvider = ({ children }) => {
         })
     };
 
+    const fetchUserTasks = async (accessToken) => {
+        await getAuthedAxios(accessToken).get("https://jira-clone-c84z.vercel.app/api/posts/userTasks").then((res) => {
+            const data = [[], [], []];
+            for (let i = 0; i < res.data.length; i++) {
+                const curr = res.data[i]
+                data[curr.status || 0].push(curr);
+            }
+            setData(data)
+        })
+
+    }
+
     return (
-        <DragContext.Provider value={{ data, handleDrop, setData }}>
+        <DragContext.Provider value={{ data, handleDrop, setData, fetchUserTasks }}>
             {children}
         </DragContext.Provider>
     );

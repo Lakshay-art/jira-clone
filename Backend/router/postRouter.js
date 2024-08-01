@@ -45,16 +45,16 @@ router.post("/setpost", verify, async (req, res) => {
         user: req.user._id,
         title,
         description,
+        status: 0,
       });
-      let currid;
+
       await post.save();
-      console.log(post);
-      res.send(_id);
+
+      res.send(post);
     } else console.log("Not Allowed");
-    // await res.status(500).json({errors:[{msg:"Not Allowed"}]});
   } catch (error) {
     console.log(error);
-    await res.status(500).json({ errors: [{ msg: error.message }] });
+    res.status(500).json({ errors: [{ msg: error.message }] });
   }
 });
 
@@ -82,15 +82,19 @@ router.post("/deletepost", verify, async (req, res) => {
 });
 
 //send all the posts
-router.get("/theposts", async (req, res) => {
+router.get("/userTasks", async (req, res) => {
   try {
-    await Post.find({}, null, { limit: 20 }, function (err, successResponse) {
-      if (err) {
-        res.send("Error while accessing the data");
-      } else {
-        res.send(successResponse);
+    await Post.find(
+      { user: req.user._id },
+      null,
+      function (err, successResponse) {
+        if (err) {
+          res.send("Error while accessing the data");
+        } else {
+          res.send(successResponse);
+        }
       }
-    });
+    );
   } catch (error) {
     // console.log(error)
   }

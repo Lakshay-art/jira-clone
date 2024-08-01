@@ -10,7 +10,7 @@ export const Task = ({ data, id, parentColumn }) => {
         <div style={{ fontSize: 18, fontWeight: 700 }}>{data?.title}</div>
         <div style={{ fontSize: 14, marginTop: 8 }}>{data?.description}</div>
         <div style={{ fontSize: 14, marginTop: 35 }}>
-          Created at: {data?.createdAt}
+          Created at: {new Date(data?.createdAt).toUTCString()}
         </div>
         <div
           style={{
