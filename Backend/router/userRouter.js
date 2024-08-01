@@ -106,7 +106,7 @@ router.post(
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
 
-        response.json({
+        return response.json({
           id: user._id,
           name: user.fname + user.lname,
           isAdmin: user.isAdmin,
@@ -116,7 +116,7 @@ router.post(
       }
     } catch (error) {
       console.log(error);
-      await response.status(500).json({ errors: [{ msg: error.message }] });
+      response.status(500).json({ errors: [{ msg: error.message }] });
     }
   }
 );

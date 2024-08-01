@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const verify = (req, res, next) => {
   //console.log("hello");
   const authHeader = req.headers.authorization;
-  console.log("first");
+
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
@@ -45,7 +45,7 @@ router.post("/setpost", verify, async (req, res) => {
 
       await post.save();
 
-      res.send(post);
+      return res.send(post);
     } else console.log("Not Allowed");
   } catch (error) {
     console.log(error);
@@ -63,7 +63,7 @@ router.post("/deleteTask", verify, async (req, res) => {
       _id: req.body._id,
     })
       .then(() => {
-        res.status(200).json("Post Deleted");
+        return res.status(200).json("Post Deleted");
       })
       .catch((err) => {});
   } else {
@@ -80,9 +80,9 @@ router.get("/userTasks", verify, async (req, res) => {
       null,
       function (err, successResponse) {
         if (err) {
-          res.send("Error while accessing the data");
+          return res.send("Error while accessing the data");
         } else {
-          res.send(successResponse);
+          return res.send(successResponse);
         }
       }
     );
@@ -98,7 +98,7 @@ router.post("/updateTask", verify, async (req, res) => {
     const updatedTask = req.body;
     Post.findByIdAndUpdate(req.body._id, updatedTask, function (err, response) {
       if (err) res.send("Error while accessing the data");
-      res.send(response);
+      return res.send(response);
     });
   }
 });
