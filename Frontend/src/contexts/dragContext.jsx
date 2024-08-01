@@ -18,20 +18,34 @@ export const DragProvider = ({ children }) => {
             const selectedItem = prev?.[parentColumn]?.[id];
             prev?.[parentColumn]?.splice(id, 1);
             prev?.[currentColumn]?.push(selectedItem);
-            // updateTask()
+            updateTask({ ...selectedItem, status: currentColumn })
             return prev;
         })
     };
 
     const fetchUserTasks = async () => {
         // https://jira-clone-c84z.vercel.app
-        await getAuthedAxios(accessToken).get("http://localhost:8000/api/posts/userTasks").then((res) => {
+        await getAuthedAxios(accessToken).get("https://jira-clone-c84z.vercel.app/api/posts/userTasks").then((res) => {
             const data = [[], [], []];
             for (let i = 0; i < res.data.length; i++) {
                 const curr = res.data[i]
                 data[curr.status || 0].push(curr);
             }
             setData(data)
+        })
+
+    }
+
+    const updateTask = async (task) => {
+        // https://jira-clone-c84z.vercel.app
+        await getAuthedAxios(accessToken).post("https://jira-clone-c84z.vercel.app/api/posts/updateTask", task).then((res) => {
+            // const data = [[], [], []];
+            // for (let i = 0; i < res.data.length; i++) {
+            //     const curr = res.data[i]
+            //     data[curr.status || 0].push(curr);
+            // }
+            // setData(data)
+            console.log(res.data)
         })
 
     }
