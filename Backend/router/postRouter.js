@@ -12,12 +12,12 @@ const Comments = require("../models/Comments");
 const verify = (req, res, next) => {
   //console.log("hello");
   const authHeader = req.headers.authorization;
-  console.log({ authHeader });
+
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
     jwt.verify(token, "mysecretkey", (err, user) => {
-      console.log(authHeader);
+      console.log("bgvhgv");
       if (err) {
         console.log(err);
         return res.status(403).json("Token is not valid!");
@@ -83,7 +83,7 @@ router.post("/deletepost", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", async (req, res) => {
-  console.log(req);
+  // console.log(req);
   try {
     await Post.find(
       { user: req.user._id },
