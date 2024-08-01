@@ -12,7 +12,7 @@ const Comments = require("../models/Comments");
 const verify = (req, res, next) => {
   //console.log("hello");
   const authHeader = req.headers.authorization;
-
+  console.log({ authHeader });
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
@@ -83,7 +83,7 @@ router.post("/deletepost", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", async (req, res) => {
-  console.log(req.user);
+  console.log(req);
   try {
     await Post.find(
       { user: req.user._id },
