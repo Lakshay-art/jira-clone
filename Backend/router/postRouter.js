@@ -72,23 +72,33 @@ router.post("/deleteTask", verify, async (req, res) => {
 });
 
 //send all the posts
+// router.get("/userTasks", verify, async (req, res) => {
+//   console.log({ poda: req.user });
+//   try {
+//     await Post.find(
+//       { user: req.user._id },
+//       null,
+//       function (err, successResponse) {
+//         if (err) {
+//           return res.send("Error while accessing the data");
+//         } else {
+//           return res.send(successResponse);
+//         }
+//       }
+//     );
+//   } catch (error) {
+//     console.log(error);
+//     res.send("Error while accessing the data");
+//   }
+// });
 router.get("/userTasks", verify, async (req, res) => {
   console.log({ poda: req.user });
   try {
-    await Post.find(
-      { user: req.user._id },
-      null,
-      function (err, successResponse) {
-        if (err) {
-          return res.send("Error while accessing the data");
-        } else {
-          return res.send(successResponse);
-        }
-      }
-    );
+    const posts = await Post.find({ user: req.user._id }).exec();
+    return res.send(posts);
   } catch (error) {
     console.log(error);
-    res.send("Error while accessing the data");
+    return res.status(500).json({ error: "Error while accessing the data" });
   }
 });
 
