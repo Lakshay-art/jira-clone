@@ -16,7 +16,6 @@ const mongoose = require("mongoose");
 const User = require("../router/userRouter");
 const Post = require("../router/postRouter");
 // const path = require("path");
-const Comments = require("../router/commentsRouter");
 
 const allowedOrigins = [
   "https://jira-clone-btbv.vercel.app",
@@ -66,7 +65,6 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use("/api/users", User);
 // //app.use("/api/profiles",require("./router/profileRouter"));
 app.use("/api/posts", Post);
-app.use("/api/comments", Comments);
 
 app.listen(8000, () => console.log("Server ready on port 3000."));
 
