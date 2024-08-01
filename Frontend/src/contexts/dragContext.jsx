@@ -20,7 +20,7 @@ export const DragProvider = ({ children }) => {
     };
 
     return (
-        <DragContext.Provider value={{ data, handleDrop }}>
+        <DragContext.Provider value={{ data, handleDrop, setData }}>
             {children}
         </DragContext.Provider>
     );

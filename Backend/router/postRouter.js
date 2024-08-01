@@ -48,6 +48,7 @@ router.post("/setpost", verify, async (req, res) => {
       });
       let currid;
       await post.save();
+      console.log(post);
       res.send(_id);
     } else console.log("Not Allowed");
     // await res.status(500).json({errors:[{msg:"Not Allowed"}]});

@@ -67,6 +67,6 @@ app.use("/api/users", User);
 app.use("/api/posts", Post);
 app.use("/api/comments", Comments);
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+app.listen(8000, () => console.log("Server ready on port 3000."));
 
 module.exports = app;

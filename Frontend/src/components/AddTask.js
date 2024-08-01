@@ -21,6 +21,7 @@ export const AddTask = ({ close }) => {
         setData((prevState) => {
           const prev = prevState.map((col) => [...col]);
           prev?.[0]?.push(res);
+          return prev;
         });
       });
   };
