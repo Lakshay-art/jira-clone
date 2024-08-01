@@ -16,17 +16,18 @@ const verify = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, "mysecretkey", (err, user) => {
-      console.log("bgvhgv");
-      if (err) {
-        console.log(err);
-        return res.status(403).json("Token is not valid!");
-      }
+    // jwt.verify(token, "mysecretkey", (err, user) => {
+    //   console.log("bgvhgv");
+    //   if (err) {
+    //     console.log(err);
+    //     return res.status(403).json("Token is not valid!");
+    //   }
 
-      req.user = user;
-      //console.log(user);
-      next();
-    });
+    //   req.user = user;
+    //   //console.log(user);
+    //   next();
+    // });
+    next();
   } else {
     res.status(401).json("You are not authenticated!");
   }
