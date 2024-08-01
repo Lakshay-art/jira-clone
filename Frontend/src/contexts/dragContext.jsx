@@ -24,7 +24,8 @@ export const DragProvider = ({ children }) => {
     };
 
     const fetchUserTasks = async () => {
-        await getAuthedAxios(accessToken).get("https://jira-clone-c84z.vercel.app/api/posts/userTasks").then((res) => {
+        // https://jira-clone-c84z.vercel.app
+        await getAuthedAxios(accessToken).get("http://localhost:8000/api/posts/userTasks").then((res) => {
             const data = [[], [], []];
             for (let i = 0; i < res.data.length; i++) {
                 const curr = res.data[i]

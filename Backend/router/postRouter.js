@@ -12,22 +12,20 @@ const Comments = require("../models/Comments");
 const verify = (req, res, next) => {
   //console.log("hello");
   const authHeader = req.headers.authorization;
-
+  console.log("first");
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
-    // jwt.verify(token, "mysecretkey", (err, user) => {
-    //   console.log("bgvhgv");
-    //   if (err) {
-    //     console.log(err);
-    //     return res.status(403).json("Token is not valid!");
-    //   }
+    jwt.verify(token, "mysecretkey", (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.status(403).json("Token is not valid!");
+      }
 
-    //   req.user = user;
-    //   //console.log(user);
-    //   next();
-    // });
-    next();
+      req.user = user;
+      console.log(user);
+      next();
+    });
   } else {
     res.status(401).json("You are not authenticated!");
   }
@@ -83,20 +81,20 @@ router.post("/deletepost", verify, async (req, res) => {
 });
 
 //send all the posts
-router.get("/userTasks", async (req, res) => {
-  console.log(req.user);
+router.get("/userTasks", verify, async (req, res) => {
+  console.log({ poda: req.user });
   try {
-    // await Post.find(
-    //   { user: req.user._id },
-    //   null,
-    //   function (err, successResponse) {
-    //     if (err) {
-    //       res.send("Error while accessing the data");
-    //     } else {
-    //       res.send(successResponse);
-    //     }
-    //   }
-    // );
+    await Post.find(
+      { user: req.user._id },
+      null,
+      function (err, successResponse) {
+        if (err) {
+          res.send("Error while accessing the data");
+        } else {
+          res.send(successResponse);
+        }
+      }
+    );
   } catch (error) {
     console.log(error);
   }
