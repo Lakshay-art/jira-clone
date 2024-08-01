@@ -72,25 +72,6 @@ router.post("/deleteTask", verify, async (req, res) => {
 });
 
 //send all the posts
-// router.get("/userTasks", verify, async (req, res) => {
-//   console.log({ poda: req.user });
-//   try {
-//     await Post.find(
-//       { user: req.user._id },
-//       null,
-//       function (err, successResponse) {
-//         if (err) {
-//           return res.send("Error while accessing the data");
-//         } else {
-//           return res.send(successResponse);
-//         }
-//       }
-//     );
-//   } catch (error) {
-//     console.log(error);
-//     res.send("Error while accessing the data");
-//   }
-// });
 router.get("/userTasks", verify, async (req, res) => {
   console.log({ poda: req.user });
   try {
@@ -103,13 +84,29 @@ router.get("/userTasks", verify, async (req, res) => {
 });
 
 //update posts
+// router.post("/updateTask", verify, async (req, res) => {
+//   if (req.body.username == req.user.name) {
+//     const updatedTask = req.body;
+//     Post.findByIdAndUpdate(req.body._id, updatedTask, function (err, response) {
+//       if (err) res.send("Error while accessing the data");
+//       return res.send(response);
+//     });
+//   }
+// });
 router.post("/updateTask", verify, async (req, res) => {
   if (req.body.username == req.user.name) {
-    const updatedTask = req.body;
-    Post.findByIdAndUpdate(req.body._id, updatedTask, function (err, response) {
-      if (err) res.send("Error while accessing the data");
+    try {
+      const updatedTask = req.body;
+      const response = await Post.findByIdAndUpdate(req.body._id, updatedTask, {
+        new: true,
+      }).exec();
       return res.send(response);
-    });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Error while updating the data" });
+    }
+  } else {
+    return res.status(403).json({ error: "Not Allowed" }); // Handle case where usernames don't match
   }
 });
 

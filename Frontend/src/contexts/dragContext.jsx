@@ -12,13 +12,13 @@ export const DragProvider = ({ children }) => {
     const [data, setData] = useState([]);
 
     const handleDrop = ({ id, parentColumn, currentColumn }) => {
-
+        updateTask({ ...data?.[parentColumn]?.[id], status: currentColumn })
         setData((prevState) => {
             const prev = prevState.map((col) => [...col])
             const selectedItem = prev?.[parentColumn]?.[id];
             prev?.[parentColumn]?.splice(id, 1);
             prev?.[currentColumn]?.push(selectedItem);
-            updateTask({ ...selectedItem, status: currentColumn })
+
             return prev;
         })
     };
