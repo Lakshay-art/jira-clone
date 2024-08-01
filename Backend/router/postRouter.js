@@ -83,19 +83,19 @@ router.post("/deletepost", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", async (req, res) => {
-  // console.log(req);
+  console.log(req.user);
   try {
-    await Post.find(
-      { user: req.user._id },
-      null,
-      function (err, successResponse) {
-        if (err) {
-          res.send("Error while accessing the data");
-        } else {
-          res.send(successResponse);
-        }
-      }
-    );
+    // await Post.find(
+    //   { user: req.user._id },
+    //   null,
+    //   function (err, successResponse) {
+    //     if (err) {
+    //       res.send("Error while accessing the data");
+    //     } else {
+    //       res.send(successResponse);
+    //     }
+    //   }
+    // );
   } catch (error) {
     console.log(error);
   }
