@@ -22,14 +22,18 @@ router.post("/refresh", (req, res) => {
 });
 
 const generateAccessToken = (user) => {
-  return jwt.sign({ name: user.name, isAdmin: user.isAdmin }, "mysecretkey", {
-    expiresIn: "100s",
-  });
+  return jwt.sign(
+    { _id: user._id, fname: user.fname, isAdmin: user.isAdmin },
+    "mysecretkey",
+    {
+      expiresIn: "100s",
+    }
+  );
 };
 
 const generateRefreshToken = (user) => {
   return jwt.sign(
-    { name: user.name, isAdmin: user.isAdmin },
+    { _id: user._id, fname: user.fname, isAdmin: user.isAdmin },
     "myrefreshsecretkey",
     {
       expiresIn: "10000s",
