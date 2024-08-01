@@ -39,13 +39,7 @@ export const DragProvider = ({ children }) => {
     const updateTask = async (task) => {
         // https://jira-clone-api-zeta.vercel.app
         await getAuthedAxios(user).post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", task).then((res) => {
-            // const data = [[], [], []];
-            // for (let i = 0; i < res.data.length; i++) {
-            //     const curr = res.data[i]
-            //     data[curr.status || 0].push(curr);
-            // }
-            // setData(data)
-            console.log(res.data)
+
         })
 
     }

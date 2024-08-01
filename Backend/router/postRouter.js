@@ -1,9 +1,6 @@
 var express = require("express");
-//const Post= require("../models/Post")
 var router = express.Router();
 const Post = require("../models/Post");
-//var post=require("../models/Post")
-//const User=require("../models/User");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
@@ -57,13 +54,13 @@ router.post("/setpost", verify, async (req, res) => {
 });
 
 //deleting a post
-router.post("/deletepost", verify, async (req, res) => {
+router.post("/deleteTask", verify, async (req, res) => {
   console.log(req.user.name + " " + req.body.user);
 
   if (req.user.name == req.body.user) {
     await Post.deleteOne({
       // _id:`ObjectId("${req.body.id}")`,
-      _id: req.body.id,
+      _id: req.body._id,
     })
       .then(() => {
         res.status(200).json("Post Deleted");
@@ -91,22 +88,18 @@ router.get("/userTasks", verify, async (req, res) => {
     );
   } catch (error) {
     console.log(error);
+    res.send("Error while accessing the data");
   }
 });
 
 //update posts
 router.post("/updateTask", verify, async (req, res) => {
-  // console.log(req.body.username+" "+req.user.name);
   if (req.body.username == req.user.name) {
     const updatedTask = req.body;
-    Post.findByIdAndUpdate(
-      req.body.postid,
-      updatedTask,
-      function (err, response) {
-        if (err) res.send("Error while accessing the data");
-        res.send(response);
-      }
-    );
+    Post.findByIdAndUpdate(req.body._id, updatedTask, function (err, response) {
+      if (err) res.send("Error while accessing the data");
+      res.send(response);
+    });
   }
 });
 

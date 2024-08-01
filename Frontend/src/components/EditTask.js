@@ -3,23 +3,25 @@ import Button from "./Button";
 import { useDrag } from "../contexts/dragContext";
 import useAuthedAxios from "../hooks/useAuthedAxios";
 
-export const AddTask = ({ close }) => {
+export const EditTask = ({ close, id, parentColumn, data }) => {
   const title = useRef();
   const description = useRef();
   const { setData } = useDrag();
 
   const axios = useAuthedAxios();
 
-  const add = async () => {
+  const edit = async () => {
     await axios
-      .post("https://jira-clone-api-zeta.vercel.app/api/posts/setpost", {
+      .post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", {
         title: title.current.value,
         description: description.current.value,
+        _id: data?._id,
       })
       .then((res) => {
+        console.log(res.data);
         setData((prevState) => {
           const prev = prevState.map((col) => [...col]);
-          prev?.[0]?.push(res.data);
+          prev[parentColumn][id] = res.data;
           return prev;
         });
         close();
@@ -37,14 +39,17 @@ export const AddTask = ({ close }) => {
         flexDirection: "column",
       }}
     >
-      <div style={{ fontSize: 18, fontWeight: 700 }}>Title</div>
+      <div style={{ fontSize: 18, fontWeight: 700 }}>Edit Task</div>
+
+      <div style={{ fontSize: 14, marginTop: 28 }}>Title</div>
       <input
         type="text"
         ref={title}
+        defaultValue={data?.title}
         style={{
           padding: 5,
           width: "95%",
-          marginTop: 20,
+          marginTop: 5,
           outline: "none",
           border: "none",
           borderBottom: "1px solid black",
@@ -55,10 +60,11 @@ export const AddTask = ({ close }) => {
       <input
         type="text"
         ref={description}
+        defaultValue={data?.description}
         style={{
           padding: 5,
           width: "95%",
-          marginTop: 20,
+          marginTop: 5,
           border: "none",
           outline: "none",
           borderBottom: "1px solid black",
@@ -74,10 +80,10 @@ export const AddTask = ({ close }) => {
         }}
       >
         <Button
-          title={"Add"}
+          title={"Edit"}
           borderRadius={6}
           backgroundColor="#F1F2F4"
-          onClick={add}
+          onClick={edit}
         />
         <Button
           title={"Cancel"}
