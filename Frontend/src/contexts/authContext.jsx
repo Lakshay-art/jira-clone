@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
+import { auth } from "../../firebaseInit";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const AuthContext = createContext({
   isAuthenticated: false,
@@ -10,6 +12,8 @@ const AuthContext = createContext({
   },
   login: () => { },
   logout: () => { },
+  googleSignIn: () => { },
+  googleSignOut: () => { },
 });
 
 export const AuthProvider = ({ children }) => {
@@ -24,6 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => setIsAuthenticated(true);
   const logout = () => {
+    googleSignOut()
     setIsAuthenticated(false);
     setUser({
       name: '',
@@ -32,9 +37,20 @@ export const AuthProvider = ({ children }) => {
       accessToken: '',
     })
   };
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then((user) => {
+      setIsAuthenticated(true)
+    });
+  };
+
+  const googleSignOut = () => {
+    signOut(auth);
+
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user, setUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, user, setUser, googleSignIn, googleSignOut }}>
       {children}
     </AuthContext.Provider>
   );

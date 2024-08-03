@@ -121,4 +121,22 @@ router.post(
   }
 );
 
+router.post("/glogin", async (req, res) => {
+  let { userId, username, email, profilePic } = req.body;
+  try {
+    await dbConnect();
+    let user = await User.findOne({ userId: userId });
+    if (!user) {
+      const newuser = new User({ userId, username, email, profilePic });
+      await newuser.save();
+      res.status(200).send(newuser);
+    }
+    res.status(200).send(user);
+    return;
+  } catch (err) {
+    res.status(401).send(err);
+    return;
+  }
+});
+
 module.exports = router;

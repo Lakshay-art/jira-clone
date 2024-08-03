@@ -2,8 +2,8 @@ import axios from "axios";
 // import jw from "jwt-decode";
 import { useAuth } from "../contexts/authContext";
 import { jwtDecode } from "jwt-decode";
-// import { auth } from "../../firebase";
-// import { useAuth } from "../contexts/authContext";
+import { auth } from "../../firebase";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const refreshToken = async (refreshToken) => {
   try {
@@ -15,13 +15,22 @@ const refreshToken = async (refreshToken) => {
   } catch (error) {}
 };
 
-const useAuthedAxios = () => {
-  const {
+const useAuthedAxios = async () => {
+  let {
     user: { accessToken: token, refreshToken: refresh },
+    isAuthenticated,
   } = useAuth();
+  const navigate = useNavigate();
   const authedAxios = axios.create({
     baseURL: "",
   });
+  if (!isAuthenticated) {
+    navigate("/login");
+    return Promise.reject();
+  }
+  if (isAuthenticated && !token) {
+    token = await auth.currentUser?.getIdToken();
+  }
   let accessToken = token;
   authedAxios.interceptors.request.use(
     async (config) => {

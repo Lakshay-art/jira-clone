@@ -47,7 +47,7 @@ export default function Login(props) {
                     <Button onClick={submitt} backgroundColor='#4575ED' color='white' title={"Login"} borderRadius={2} /></div>
                 <p style={{ fontSize: 12, fontWeight: 600, textAlign: "center" }}>Don't have an account?<Link to="/register" style={{ textDecoration: "none" }}> <span className="linkgreen">SignUp</span></Link></p>
 
-                <div style={{ textAlign: "center", width: "100%" }}><Button onClick={login} backgroundColor='#4575ED' color='white' title={"Login with Google"} borderRadius={6} /></div>
+                <div style={{ textAlign: "center", width: "100%" }}><Button onClick={go} backgroundColor='#4575ED' color='white' title={"Login with Google"} borderRadius={6} /></div>
             </div>
 
         </div>
