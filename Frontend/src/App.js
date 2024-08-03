@@ -13,7 +13,7 @@ import { useAuth } from "./contexts/authContext";
 import { DragProvider } from "./contexts/dragContext";
 import Navbar from "./components/NavBar";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebaseInit";
+import { auth } from "./firebaseInit";
 import axios from "axios";
 
 function App() {

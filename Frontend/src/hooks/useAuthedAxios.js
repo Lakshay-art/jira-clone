@@ -2,8 +2,9 @@ import axios from "axios";
 // import jw from "jwt-decode";
 import { useAuth } from "../contexts/authContext";
 import { jwtDecode } from "jwt-decode";
-import { auth } from "../../firebase";
+
 import { Navigate, useNavigate } from "react-router-dom";
+import { auth } from "../firebaseInit";
 
 const refreshToken = async (refreshToken) => {
   try {

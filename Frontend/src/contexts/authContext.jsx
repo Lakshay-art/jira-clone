@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { auth } from "../../firebaseInit";
+import { auth } from "../firebaseInit";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const AuthContext = createContext({
