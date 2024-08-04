@@ -1,14 +1,17 @@
 import React, { createContext, useState, useContext } from "react";
-import getAuthedAxios from "../lib/authedAxios";
 import { useAuth } from "./authContext"
+import useAuthedAxios from "../hooks/useAuthedAxios";
 
 const DragContext = createContext({
     handleDrop: () => { },
     data: undefined
 });
 
+
+
 export const DragProvider = ({ children }) => {
-    const { user } = useAuth()
+    // const { user } = useAuth()
+    const authedAxios = useAuthedAxios()
     const [data, setData] = useState([]);
 
     const handleDrop = ({ id, parentColumn, currentColumn }) => {
@@ -25,7 +28,7 @@ export const DragProvider = ({ children }) => {
 
     const fetchUserTasks = async () => {
         // https://jira-clone-api-zeta.vercel.app
-        await getAuthedAxios(user).get("https://jira-clone-api-zeta.vercel.app/api/posts/userTasks").then((res) => {
+        (await authedAxios).get(`${process.env.REACT_APP_SERVER}/posts/userTasks`).then((res) => {
             const data = [[], [], []];
             for (let i = 0; i < res.data.length; i++) {
                 const curr = res.data[i]
@@ -38,7 +41,7 @@ export const DragProvider = ({ children }) => {
 
     const updateTask = async (task) => {
         // https://jira-clone-api-zeta.vercel.app
-        await getAuthedAxios(user).post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", task).then((res) => {
+        (await authedAxios).post(`${process.env.REACT_APP_SERVER}/posts/updateTask`, task).then((res) => {
 
         })
 

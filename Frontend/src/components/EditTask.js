@@ -11,8 +11,8 @@ export const EditTask = ({ close, id, parentColumn, data }) => {
   const axios = useAuthedAxios();
 
   const edit = async () => {
-    await axios
-      .post("https://jira-clone-api-zeta.vercel.app/api/posts/updateTask", {
+    (await axios)
+      .post(`${process.env.REACT_APP_SERVER}/posts/updateTask`, {
         title: title.current.value,
         description: description.current.value,
         _id: data?._id,

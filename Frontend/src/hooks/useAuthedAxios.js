@@ -8,9 +8,12 @@ import { auth } from "../firebaseInit";
 
 const refreshToken = async (refreshToken) => {
   try {
-    const res = await axios.post("http://localhost:8000/api/users/refresh", {
-      token: refreshToken,
-    });
+    const res = await axios.post(
+      `${process.env.REACT_APP_SERVER}/users/refresh`,
+      {
+        token: refreshToken,
+      }
+    );
     console.log(res.data);
     return res.data;
   } catch (error) {}
@@ -26,30 +29,36 @@ const useAuthedAxios = async () => {
     baseURL: "",
   });
   if (!isAuthenticated) {
-    navigate("/login");
-    return Promise.reject();
+    // navigate("/login");
+    return null;
   }
+  //google
   if (isAuthenticated && !token) {
     token = await auth.currentUser?.getIdToken();
+    authedAxios.interceptors.request.use(
+      async (config) => {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.authtype = "google";
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
   }
+
+  //jwt
   let accessToken = token;
   authedAxios.interceptors.request.use(
     async (config) => {
-      // const { user } = useAuth();
-      // let accessToken = "";
-      if (true) {
-        // accessToken = await auth.currentUser?.getIdToken();
-      }
       const decodedToken = jwtDecode(accessToken);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
         console.log("new access built");
-        // console.log(access);
         accessToken = (await refreshToken(refresh)).accessToken;
       }
-      //  config.headers["authorization"]="Bearer "+ data;
-
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers.authtype = "jwt";
       }
       return config;
     },

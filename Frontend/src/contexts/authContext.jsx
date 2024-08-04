@@ -3,7 +3,7 @@ import { auth } from "../firebaseInit";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const AuthContext = createContext({
-  isAuthenticated: false,
+  isAuthenticated: undefined,
   user: {
     name: '',
     id: '',
@@ -17,7 +17,7 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
   const [user, setUser] = useState({
     name: '',
     id: '',
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   })
 
 
-  const login = () => setIsAuthenticated(true);
+  const login = () => { setIsAuthenticated(true) };
   const logout = () => {
     googleSignOut()
     setIsAuthenticated(false);
@@ -37,11 +37,13 @@ export const AuthProvider = ({ children }) => {
       accessToken: '',
     })
   };
-  const googleSignIn = () => {
+  const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then((user) => {
+    await signInWithPopup(auth, provider).then((user) => {
       setIsAuthenticated(true)
+      return true
     });
+
   };
 
   const googleSignOut = () => {

@@ -7,16 +7,13 @@ import { useAuth } from "../contexts/authContext";
 
 export default function Showposts(props) {
   const { data, fetchUserTasks } = useDrag();
-  const {
-    user: { accessToken },
-  } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [modal, openModal] = useState();
   useEffect(() => {
-    console.log("first");
-    if (accessToken) {
-      fetchUserTasks(accessToken);
+    if (isAuthenticated) {
+      fetchUserTasks();
     }
-  }, [accessToken]);
+  }, [isAuthenticated]);
   return (
     <div className="Loginandregister mt-3">
       {!!modal && <dialog open>{modal}</dialog>}

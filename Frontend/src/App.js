@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
@@ -18,13 +19,19 @@ import axios from "axios";
 
 function App() {
   const { isAuthenticated, setUser, login } = useAuth();
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentuser) => {
       // console.log(currentuser);
       if (!currentuser) return;
       axios
-        .post("https://jira-clone-api-zeta.vercel.app/api/users/glogin", {
-          googleAuthData: currentuser,
+        .post(`${process.env.REACT_APP_SERVER}/users/glogin`, {
+          googleAuthData: {
+            userId: currentuser.uid,
+            username: currentuser.displayName,
+            email: currentuser.email,
+            profilePic: currentuser.photoURL,
+          },
         })
         .then((user) => {
           setUser(user?.data);
@@ -39,15 +46,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/login" element={<Login />} />
+          {/* <Route
+            path="/login"
+            element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
+          /> */}
           <Route
             path="/dashboard"
             element={
-              isAuthenticated ? (
+              isAuthenticated === false ? (
+                <Navigate to="/login" />
+              ) : (
                 <DragProvider>
                   <DashBoard />
                 </DragProvider>
-              ) : (
-                <Navigate to="/login" />
               )
             }
           ></Route>

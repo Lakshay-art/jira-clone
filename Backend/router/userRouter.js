@@ -122,14 +122,20 @@ router.post(
 );
 
 router.post("/glogin", async (req, res) => {
-  let { userId, username, email, profilePic } = req.body;
+  let { userId, username, email, profilePic } = req.body.googleAuthData;
   try {
-    await dbConnect();
-    let user = await User.findOne({ userId: userId });
+    let user = await User.findOne({ email });
+    console.log(user);
     if (!user) {
-      const newuser = new User({ userId, username, email, profilePic });
+      const newuser = new User({
+        fname: username,
+        email,
+        profilePic,
+        gId: userId,
+      });
       await newuser.save();
       res.status(200).send(newuser);
+      return;
     }
     res.status(200).send(user);
     return;

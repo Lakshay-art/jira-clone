@@ -3,50 +3,50 @@ var router = express.Router();
 const Post = require("../models/Post");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const verify = require("../verifyuser");
 
-//verifying the user
-const verify = (req, res, next) => {
-  //console.log("hello");
-  const authHeader = req.headers.authorization;
+// verifying the user
+// const verify = (req, res, next) => {
+//   //console.log("hello");
+//   const authHeader = req.headers.authorization;
 
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
+//   if (authHeader) {
+//     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, "mysecretkey", (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(403).json("Token is not valid!");
-      }
+//     jwt.verify(token, "mysecretkey", (err, user) => {
+//       if (err) {
+//         console.log(err);
+//         return res.status(403).json("Token is not valid!");
+//       }
 
-      req.user = user;
-      console.log(user);
-      next();
-    });
-  } else {
-    res.status(401).json("You are not authenticated!");
-  }
-};
+//       req.user = user;
+//       console.log(user);
+//       next();
+//     });
+//   } else {
+//     res.status(401).json("You are not authenticated!");
+//   }
+// };
 
 //creating a new post
 router.post("/setpost", verify, async (req, res) => {
   try {
-    if (req.body.username == req.user.name) {
-      const title = req.body.title;
-      const description = req.body.description;
+    const title = req.body.title;
+    const description = req.body.description;
 
-      const _id = mongoose.Types.ObjectId();
-      var post = await new Post({
-        _id,
-        user: req.user._id,
-        title,
-        description,
-        status: 0,
-      });
+    const _id = mongoose.Types.ObjectId();
+    var post = new Post({
+      _id,
+      user: req.user._id,
+      guser: req.user.gId,
+      title,
+      description,
+      status: 0,
+    });
 
-      await post.save();
+    await post.save();
 
-      return res.send(post);
-    } else console.log("Not Allowed");
+    return res.send(post);
   } catch (error) {
     console.log(error);
     res.status(500).json({ errors: [{ msg: error.message }] });
@@ -56,10 +56,9 @@ router.post("/setpost", verify, async (req, res) => {
 //deleting a post
 router.post("/deleteTask", verify, async (req, res) => {
   console.log(req.user.name + " " + req.body.user);
-
-  if (req.user.name == req.body.user) {
+  const post = await Post.findOne({ _id: req.body._id });
+  if (post.user === req.user._id || post.guser === req.user.gId) {
     await Post.deleteOne({
-      // _id:`ObjectId("${req.body.id}")`,
       _id: req.body._id,
     })
       .then(() => {
@@ -73,9 +72,17 @@ router.post("/deleteTask", verify, async (req, res) => {
 
 //send all the posts
 router.get("/userTasks", verify, async (req, res) => {
-  console.log({ poda: req.user });
+  const orConditions = [];
+  if (req.user._id !== undefined) {
+    orConditions.push({ user: req.user._id });
+  }
+  if (req.user.gId !== undefined) {
+    orConditions.push({ guser: req.user.gId });
+  }
   try {
-    const posts = await Post.find({ user: req.user._id }).exec();
+    const posts = await Post.find({
+      $or: orConditions,
+    }).exec();
     return res.send(posts);
   } catch (error) {
     console.log(error);
@@ -94,7 +101,8 @@ router.get("/userTasks", verify, async (req, res) => {
 //   }
 // });
 router.post("/updateTask", verify, async (req, res) => {
-  if (req.body.username == req.user.name) {
+  const post = await Post.findOne({ _id: req.body._id });
+  if (post.user === req.user._id || post.guser === req.user.gId) {
     try {
       const updatedTask = req.body;
       const response = await Post.findByIdAndUpdate(req.body._id, updatedTask, {

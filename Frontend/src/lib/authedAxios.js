@@ -6,9 +6,12 @@ import { jwtDecode } from "jwt-decode";
 
 const refreshToken = async (refreshToken) => {
   try {
-    const res = await axios.post("http://localhost:8000/api/users/refresh", {
-      token: refreshToken,
-    });
+    const res = await axios.post(
+      `${process.env.REACT_APP_SERVER}/users/refresh`,
+      {
+        token: refreshToken,
+      }
+    );
     return res.data;
   } catch (error) {}
 };

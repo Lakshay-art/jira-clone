@@ -13,7 +13,7 @@ export default function Login(props) {
     const password = useRef();
     const submitt = (e) => {
         e.preventDefault();
-        axios.post("https://jira-clone-api-zeta.vercel.app/api/users/login", {
+        axios.post(`${process.env.REACT_APP_SERVER}/users/login`, {
             email: email.current.value,
             password: password.current.value,
         }).then((res) => {
@@ -26,7 +26,7 @@ export default function Login(props) {
     }
     // const login = (e) => {
     //     e.preventDefault();
-    //     axios.post("http://localhost:8000/api/users/login", {
+    //     axios.post("${process.env.REACT_APP_SERVER}/users/login", {
     //         email: email.current.value,
     //         password: password.current.value,
     //     }).then((res) => {
@@ -47,7 +47,16 @@ export default function Login(props) {
                     <Button onClick={submitt} backgroundColor='#4575ED' color='white' title={"Login"} borderRadius={2} /></div>
                 <p style={{ fontSize: 12, fontWeight: 600, textAlign: "center" }}>Don't have an account?<Link to="/register" style={{ textDecoration: "none" }}> <span className="linkgreen">SignUp</span></Link></p>
 
-                <div style={{ textAlign: "center", width: "100%" }}><Button onClick={googleSignIn} backgroundColor='#4575ED' color='white' title={"Login with Google"} borderRadius={6} /></div>
+                <div style={{ textAlign: "center", width: "100%" }}><Button onClick={() => {
+                    googleSignIn().then(() => {
+                        navigate("/dashboard")
+                        console.log("podaaa")
+                    })
+                    // if (googleSignIn()) {
+                    //     navigate("/dashboard")
+                    //     console.log("podaaa")
+                    // }
+                }} backgroundColor='#4575ED' color='white' title={"Login with Google"} borderRadius={6} /></div>
             </div>
 
         </div>

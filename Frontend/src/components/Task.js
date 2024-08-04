@@ -11,8 +11,8 @@ export const Task = ({ data, id, parentColumn }) => {
   const { setData } = useDrag();
   const [modal, openModal] = useState();
   const deletePost = async () => {
-    await axios
-      .post("https://jira-clone-api-zeta.vercel.app/api/posts/deleteTask", {
+    (await axios)
+      .post(`${process.env.REACT_APP_SERVER}/posts/deleteTask`, {
         _id: data?._id,
       })
       .then((res) => {

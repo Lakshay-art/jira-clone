@@ -11,8 +11,8 @@ export const AddTask = ({ close }) => {
   const axios = useAuthedAxios();
 
   const add = async () => {
-    await axios
-      .post("https://jira-clone-api-zeta.vercel.app/api/posts/setpost", {
+    (await axios)
+      .post(`${process.env.REACT_APP_SERVER}/posts/setpost`, {
         title: title.current.value,
         description: description.current.value,
       })
